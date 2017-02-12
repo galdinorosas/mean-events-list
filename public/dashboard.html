@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<style type="text/css">
+
+	  html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /*Styles for short messages to the user.*/
+    .zeroFollowedArtist, 
+    .zeroLocatedArtists, 
+    .gatheringInfo{
+      text-align: center;
+      display: none;
+      margin: 4em auto;
+      width: 20em;
+    }
+
+    .eventsTable{
+      margin: 0 auto;
+    }
+
+    /*User city autocomplete input*/
+    #pac-input {
+      background-color: #fff;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      margin-left: 12px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 300px;
+      text-align: center;
+    }
+    
+    #pac-input:focus {
+      border-color: #4d90fe;
+    }
+    
+    .pac-container {
+      font-family: Roboto;
+    }
+    
+
+    .logout{
+        position: relative;
+        margin: -14% 0em 0em 88%;
+    }
+
+    .page-header {
+      text-align: center;
+      width: 90%;
+
+    }
+
+    .input-group{
+      width: 30em;
+      margin-left: 33%;
+      margin-bottom: 1em;
+    }
+
+    .media-object{
+      width: 64px;
+      height: 64px;
+    }
+
+    .media{
+      width: 55em;
+      margin: 1em auto;
+    }
+
+    h3{
+      float: left;
+    }
+
+    span{
+      float: left;
+    }
+
+    .eventDate{
+      font-size: 1.25em;
+      margin-right: 2.5em;
+      float: right;
+    }
+
+    .followedArtist{
+      clear: left;
+    }
+
+    .eventLocation{
+      clear: left;
+    }
+
+    .eventInfo{
+      float: right;
+      margin: -1.5em 3em 0em 0em;
+    }
+
+    .media-heading{
+      margin-bottom: 5px;
+      width: 17em;
+      height: 2em;
+      overflow: scroll;
+    }
+
+	</style>
+
+</head>
+
+<body >
+
+  <!-- Header section of the app page with a header and logout button. -->
+  <header class="page-header container-fluid">
+    <h1>My Spotify Events List <small>with Songkick!</small></h1>
+    <a type="button" class="btn btn-default navbar-btn logout" href="/logout">Log Out</a>
+  </header>
+  
+  
+  
+  
+<!-- This is the users input for which location to querie events. -->
+  <div class="input-group">
+      <input id="pac-input" class="controls form-control" type="text" placeholder="Enter a location to query events..">
+      <span class="input-group-btn">
+        <button class="btn btn-default goButton" type="button">Go!</button>
+      </span>
+  </div>
+
+  <!-- The following 3 messages are displayed if the user has no followed artists, there are no artists with respect to location, and when gathering information at the beginning page load. -->
+  <h2 class="zeroFollowedArtist"> You are not following any artists on Spotify. Please go follow some to use this app.</h2>
+
+  <h2 class="zeroLocatedArtists"> There are no following artist playing near the searched location in the near future.</h2>
+
+  <h2 class="gatheringInfo"> Gathering Information...</h2>
+
+  <!-- Events list without appended events. The code below is an example of an appended event. -->
+  <section class="eventList container-fluid">
+
+    <!-- <div class="media well well-lg" >
+      <div class="media-right pull-right">
+        <a href="#">
+          <img class="media-object" src="https://i.scdn.co/image/33df69502ea867976f00cfc08c092c85f8834925" alt="artistImage">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading">Media heading</h4>
+        <span class="eventDate">13/11/2015</span>
+        <span class="followedArtist">The red hot chili peppers @ </span>
+        <span class="eventVenue">The Warfield</span>
+        <span class="eventLocation">San Francisco, CA</span>
+        <a href="#" class="btn btn-info eventInfo" target="_blank">Event Information</a>
+      </div>
+    </div> -->
+
+  </section>
+
+  
+  
+
+
+
+  <!--Script tags for dashboardApp.js and for google maps places library.-->
+	<script type="text/javascript" src="dashboardApp.js"></script>
+	<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlm97QYL0YHrv1DD8o-Yyde0bRBbubREs&libraries=places&callback=locationAutocomplete"></script>
+
+</body>
+</html>
+
