@@ -1,20 +1,16 @@
-<!--Navigation Bar-->
 <nav>
-    <!--Navigation links-->
     <ul>
         <li>What?</li>
         <li>Contact</li>
-        <!--Alternate SignIn Link-->
         <li>
-            <input class="navSignIn" type="button" value="Try Me" />
+            <button class="navSignIn" type="button" ng-click="go('auth/spotify')" type="button" value="Try Me" ></button>
         </li>
     </ul>
 </nav>
 <div class="mainContainer">
     <h1>Search By Your Taste In Music</h1>
-    <div class="centerContainer">
-        <!--Main SignIn Button.-->
-        <a href="/auth/spotify"><img class="spotifyLoginImage" src="images/log_in-desktop.svg"></img>
-        </a>
+    <div class="centerContainer" >
+        <button type="button" ng-click="go('auth/spotify')"><img class="spotifyLoginImage" src="images/log_in-desktop.svg"/>
+        </button>
     </div>
 </div>

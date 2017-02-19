@@ -1,0 +1,106 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/*Styles for short messages to the user.*/
+
+.zeroFollowedArtist,
+.zeroLocatedArtists,
+.gatheringInfo {
+    text-align: center;
+    display: none;
+    margin: 4em auto;
+    width: 20em;
+}
+
+.eventsTable {
+    margin: 0 auto;
+}
+
+
+/*User city autocomplete input*/
+
+#pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+    text-align: center;
+}
+
+#pac-input:focus {
+    border-color: #4d90fe;
+}
+
+.pac-container {
+    font-family: Roboto;
+}
+
+.logout {
+    position: relative;
+    margin: -14% 0em 0em 88%;
+}
+
+.page-header {
+    text-align: center;
+    width: 90%;
+}
+
+.input-group {
+    width: 30em;
+    margin-left: 33%;
+    margin-bottom: 1em;
+}
+
+.media-object {
+    width: 64px;
+    height: 64px;
+}
+
+.media {
+    width: 55em;
+    margin: 1em auto;
+}
+
+h3 {
+    float: left;
+}
+
+span {
+    float: left;
+}
+
+.eventDate {
+    font-size: 1.25em;
+    margin-right: 2.5em;
+    float: right;
+}
+
+.followedArtist {
+    clear: left;
+}
+
+.eventLocation {
+    clear: left;
+}
+
+.eventInfo {
+    float: right;
+    margin: -1.5em 3em 0em 0em;
+}
+
+.media-heading {
+    margin-bottom: 5px;
+    width: 17em;
+    height: 2em;
+    overflow: scroll;
+}
