@@ -1,22 +1,18 @@
 var express = require('express'),
     path = require('path'),
-    favicon = require('serve-favicon'),
-    logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     unirest = require('unirest'),
-    events = require('events'),
-    methodOverride = require('method-override'),
     session = require('express-session'),
     passport = require('passport'),
     env = require('dotenv').config(),
     SpotifyStrategy = require('./lib/passport-spotify/index').Strategy,
-    async = require('async'),
     api = require('./server/utilities/api.js'),
     filter = require('./server/utilities/data-filter.js'),
     token,
     controllers = require('./server/controllers/events.js'),
     routes = require('./server/routes/routes.js');
+
 
 
 passport.serializeUser(function(user, done) {
@@ -54,6 +50,6 @@ app.get('/token', function(req,res){
     return res.status(200).json({ token: token });
 });
 
-// app.listen(3000, function() {
-//     console.log('Please navigate to http://localhost:8080');
-// });
+app.listen(8080, function() {
+    console.log('Please navigate to http://localhost:8080');
+});
