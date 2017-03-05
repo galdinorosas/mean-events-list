@@ -1,0 +1,7 @@
+<header class="page-header container-fluid">
+    <h1>My Spotify Events List <small>with Songkick!</small></h1>
+    <a type="button" class="btn btn-default navbar-btn logout" href="/logout">Log Out</a>
+</header>
+<input id="googlePlaces" type="text" g-places-autocomplete ng-model="place" />
+<h5>Result:</h5>
+<event-card ng-repeat="event in events" events="event"></event-card>

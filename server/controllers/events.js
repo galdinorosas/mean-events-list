@@ -27,7 +27,7 @@ var getArtistEventsData = function(req, res) {
     var artistEventResults = [];
     var favoriteArtists = api.getFavoriteArtists('me/following', {
         type: 'artist'
-    }, req.query.token.token);
+    }, req.query.token);
     favoriteArtists.on('end', function(data) {
         req.session.followObj = data;
         appData.userFollowedArtists = data.artists.items;
@@ -42,19 +42,19 @@ var getArtistEventsData = function(req, res) {
                     }
                 });
             }, function(err) {
-                console.log('user followed artists', appData.userFollowedArtists.length);
-    console.log('artist events info', appData.artistEventsInfo.length);
                 appData.artistEventsInfo = filter.cleanUpEvents(artistEventResults, appData.userFollowedArtists);
                 return res.status(200).json({ events: filter.initArtistList(artistEventResults, appData.userFollowedArtists) });
+
             })
         }
     });
     favoriteArtists.on('error', function(data) {
         console.log('user follow search error event', data);
     });
+
 }
 
-var logoutUser = function(req,res){
+var logoutUser = function(req, res) {
     req.session.followObj = [];
     req.logout();
     // Delete all cookies : next step
@@ -62,7 +62,7 @@ var logoutUser = function(req,res){
 }
 
 module.exports = {
-    filterEventsPerLocation : filterEventsPerLocation,
-    getArtistEventsData : getArtistEventsData,
-    logoutUser : logoutUser
+    filterEventsPerLocation: filterEventsPerLocation,
+    getArtistEventsData: getArtistEventsData,
+    logoutUser: logoutUser
 }

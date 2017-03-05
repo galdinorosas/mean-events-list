@@ -1,136 +1,94 @@
-$(document).ready(function() {
+angular.module('dashboardApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'google.places'])
+    .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+        $locationProvider.hashPrefix('!');
 
-
-    $('.gatheringInfo').css('display', 'block');
-
-    /**
-     * Jquery ajax call to the /userfollowedArtist endpoint to my server. This ajax call is fired immediately when
-     * when the DOM is ready for scipting, which is when the server is going to get the entire list of the events of
-     * the users followed artists.
-     */
-
-    $.get("/token", function() {})
-        .done(function(token) {
-            $.get("/artistEvents", {
-                    token: token
-                })
-                .done(function(data) {
-                    var result = data;
-                    viewResults(result);
-                    console.log('results:', result);
-                })
-                .fail(function() {
-                    alert("error");
-                });
-        })
-        .fail(function() {
-            alert("error");
+        $routeProvider.when('/', {
+            templateUrl: 'views/dashboard-view.html',
+            controller: 'dashboardCtrl'
         });
 
-    /**
-     * This function will fire off within the userFollowedArtist endpoint success function.
-     * @param {object} results - This is the artist event information object sent from the server.
-     */
-    var viewResults = function(results) {
+        $routeProvider.otherwise({
+            redirectTo: '/'
+        });
 
-        console.log('inside the viewResults function', results);
-        $('.gatheringInfo').css('display', 'none');
+    }]).factory('api', ['$http', function($http) {
+        var api = {};
+        api.getArtistData = function(cb) {
+            $http({
+                method: 'GET',
+                url: '/token'
+            }).then(function success(response) {
+                    console.log('token:', response);
 
-        // If/else statement to check the total number of events. If the total number of events is zero,
-        // then a message regarding the situation will appear. If the total number of events is anything other than
-        // zero then the events will be appended to the events list.
-        if (results.events.length === 0) {
-            $('.zeroFollowedArtist').css("display", "block");
-        } else {
+                    $http({
+                        method: 'GET',
+                        url: '/artistEvents',
+                        params: {
+                            token: response.data.token
+                        }
+                    }).then(function success(response) {
+                            console.log('artistEvents response', response);
+                            cb(response);
+                        },
+                        function error(err) {
+                            console.log('error: ' + err);
+                        });
+                },
+                function error(err) {
+                    console.log('error: ' + err);
+                });
+        };
 
-            for (var i = 0; i < results.events.length; i++) {
-
-                var piece = results.events[i];
-                var venue = piece.venue;
-                var name = piece.name;
-                var event = piece.event;
-                var location = piece.location;
-                var date = piece.date;
-                var url = piece.url;
-                var image = piece.image;
-
-                $('.eventList').append('<div class="media well well-lg" > <div class="media-right pull-right"> <a href="#"> <img class="media-object" src="' + image + '" alt="artistImage"> </a> </div> <div class="media-body"> <h3 class="media-heading">' + event + '</h4> <span class="eventDate">' + date + '</span> <span class="followedArtist">' + name + ' @ </span> <span class="eventVenue">' + venue + '</span> <span class="eventLocation">' + location + '</span> <a href="' + url + '" class="btn btn-info eventInfo" target="_blank">Event Information</a> </div> </div>');
-
-            }
-        }
-    };
-
-
-});
-
-
-
-/**
- * This function calls the /artistLocationSearch endpoint and receives an object of events per location. The
- * location is based on the lat and long parameters.
- * @param {number} lat - latitude coordinates.
- * @param {number} long - longitude coordinates.
- */
-var locationEventSearch = function(lat, long) {
-    $.ajax({
-        url: "/eventSearch",
-        type: "get",
-        data: { lat: lat, long: long },
-        success: function(response) {
-            console.log('response', response);
-            $('.zeroLocatedArtists').css('display', 'none');
-            $('.zeroFollowedArtist').css('display', 'none');
-            $('.eventList').empty();
-
-            if (response.located.length === 0) {
-
-                $('.zeroLocatedArtists').css('display', 'block');
-
-            } else {
-
-                for (var n = 0; n < response.located.length; n++) {
-                    var date = response.located[n].date;
-                    var event = response.located[n].event;
-                    var image = response.located[n].image;
-                    var name = response.located[n].name;
-                    var venue = response.located[n].venue;
-                    var location = response.located[n].location;
-                    var url = response.located[n].url;
-
-
-                    console.log(response.located[0]);
-
-                    $('.eventList').append('<div class="media well well-lg" > <div class="media-right pull-right"> <a href="#"> <img class="media-object" src="' + image + '" alt="artistImage"> </a> </div> <div class="media-body"> <h3 class="media-heading">' + event + '</h4> <span class="eventDate">' + date + '</span> <span class="followedArtist">' + name + ' @ </span> <span class="eventVenue">' + venue + '</span> <span class="eventLocation">' + location + '</span> <a href="' + url + '" class="btn btn-info eventInfo" target="_blank">Event Information</a> </div> </div>');
-
+        api.locatedEvents = function(lat, long, cb) {
+            $http({
+                method: 'GET',
+                url: '/eventSearch',
+                params: {
+                    lat: lat,
+                    long: long
                 }
+            }).then(function success(response) {
+                console.log('located res:', response);
+                cb(response);
+            }, function error(err) {
+                console.log('located err:', err);
+            });
+        }
+
+        return api;
+
+    }]).directive('eventCard', function() {
+        return {
+            restrict: 'EA',
+            templateUrl: 'views/event-card.html',
+            scope: {
+                events: '='
             }
-        },
-        error: function(xhr) {
-            console.log(xhr);
         }
-    });
+    })
+    .controller('dashboardCtrl', ['$scope', 'api', function($scope, api) {
+        console.log('dashboardctrl');
 
-};
+        api.getArtistData(function(res) {
+            console.log('ctrl res:', res);
+            $scope.events = res.data.events;
+        });
 
-/**
- * This is the google maps autocomplete function which is called from the html google script tag. This function
- * needs to be outside of the document.ready function because the html script tag is called before the DOM is
- * completely ready for scripting.
- */
-function locationAutocomplete() {
-    var input = /** @type {!HTMLInputElement} */
-        (document.getElementById('pac-input'));
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.addListener('place_changed', function() {
+        $scope.place = null;
+        var inputFrom = document.getElementById('googlePlaces');
+        var autocompleteFrom = new google.maps.places.Autocomplete(inputFrom);
+        google.maps.event.addListener(autocompleteFrom, 'place_changed', function() {
+            var place = autocompleteFrom.getPlace();
+            $scope.lat = place.geometry.location.lat();
+            $scope.long = place.geometry.location.lng();
 
-        var place = autocomplete.getPlace();
-        var lat = place.geometry.location.lat();
-        var lng = place.geometry.location.lng();
-        locationEventSearch(lat, lng);
+            console.log('place',place);
+            api.locatedEvents($scope.lat,$scope.long,function(res){
+                console.log('located results:', res);
+                $scope.events = res.data.located;
+            })
+            $scope.$apply();
+        });
 
-        if (!place.geometry) {
-            window.alert("Autocomplete's returned place contains no geometry");
-            return;
-        }
-    });
-}
+
+    }]);

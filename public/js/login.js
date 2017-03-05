@@ -3,18 +3,8 @@ angular.module('myApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate'])
         $locationProvider.hashPrefix('!');
 
         $routeProvider.when('/', {
-            templateUrl: 'views/test.html',
+            templateUrl: 'views/login-view.html',
             controller: 'homeCtrl'
-        });
-
-        $routeProvider.when('/restaurantSearch', {
-            templateUrl: 'views/home/restaurantSearch.html',
-            controller: 'restaurantSearchCtrl'
-        });
-
-        $routeProvider.when('/restaurantInfo', {
-            templateUrl: 'views/home/restaurantInfo.html',
-            controller: 'restaurantInfoCtrl'
         });
 
         $routeProvider.otherwise({
@@ -22,15 +12,15 @@ angular.module('myApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate'])
         });
 
     }])
-    .controller('homeCtrl', ['$scope', '$http', '$rootScope','$location', '$window', function($scope, $http, $rootScope, $location, $window) {
+    .controller('homeCtrl', ['$scope', '$http', '$rootScope', '$location', '$window', function($scope, $http, $rootScope, $location, $window) {
         console.log('homectrl');
         $scope.go = function(path) {
             $window.location.href = path;
         };
 
         $scope.clear = function() {
-            $scope.name = '',
-                $scope.age = null;
+            $scope.name = '';
+            $scope.age = null;
         };
         $scope.addToMongo = function() {
             $http({
