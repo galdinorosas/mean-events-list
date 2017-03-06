@@ -13,14 +13,16 @@ var cleanCSS = require('gulp-clean-css');
 var autoprefixer = require('gulp-autoprefixer');
 
 var paths = {
-    scripts: ['./public/js/**/*.js', '!./public/bower_components/**/*.js'],
+    login:['./public/login/*.js', './public/login/*.html'],
+    dashboard: ['./public/dashboard/*.js', './public/dashboard/*.html'],
+    scripts: ['public/**/*.js' ,'!./public/bower_components/**/*.js'],
     html: [
         './public/**/*.html',
         '!index.html',
         '!./bower_components/**/*.html'
     ],
     scss: './public/scss/**/*.scss',
-    css: './public/stylesheets/*.css',
+    css: './public/stylesheets/**/*.css',
     index: 'public/index.html',
     build: './build/'
 }
@@ -49,7 +51,7 @@ gulp.task('minify-css', function() {
 gulp.task('js', function() {
     return gulp.src(paths.scripts)
         .pipe(uglify())
-        .pipe(gulp.dest(paths.build + 'js'));
+        .pipe(gulp.dest(paths.build));
 })
 
 gulp.task('jshint', function() {

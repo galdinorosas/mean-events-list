@@ -1,0 +1,1 @@
+angular.module('dashboardApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'google.places', 'angularCSS']);
