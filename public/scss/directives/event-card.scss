@@ -1,0 +1,88 @@
+event-card .event-container {
+    background-color: lightgrey;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+event-card .event-container:first-child {
+    margin-top: 20px;
+}
+
+event-card .event-container:last-child {
+    margin-bottom: 0;
+}
+
+event-card .event-info {
+    width: 75%;
+    float: left;
+    padding-left: 5px;
+}
+
+event-card img {
+    width: 25%;
+}
+
+event-card p {
+    display: block;
+}
+
+event-card p.eventVenue {
+    display: none;
+}
+
+@media (min-width: 468px) {
+    event-card .event-container {
+        font-size: 0.8em;
+        width: 350px;
+        margin: 0 auto;
+        border: 1px solid black;
+    }
+    event-card .event-info {
+        padding: 10px;
+    }
+    event-card .eventDate {
+        float: left;
+    }
+    event-card .eventName {
+        float: right;
+    }
+    event-card .eventLocation {
+        float: left;
+        clear: left;
+    }
+    event-card p.eventVenue {
+        display: block;
+        float: left;
+        clear: left;
+    }
+}
+
+@media (min-width: 768px) {
+    event-card .event-container {
+        font-size: 1.15em;
+        width: 500px;
+    }
+    event-card .event-info {
+        padding-top: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    event-card .event-container {
+        font-size: 1.5em;
+        width: 750px;
+        height: 150px;
+    }
+    event-card .event-container img {
+        width: 148px;
+        float: right;
+    }
+    event-card p {
+        margin-bottom: 15px;
+    }
+    event-card .event-info {
+        padding-top: 10px;
+        width: 80%;
+    }
+}

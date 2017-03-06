@@ -1,10 +1,11 @@
-angular.module('myApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate'])
+angular.module('myApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate','angularCSS'])
     .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
         $locationProvider.hashPrefix('!');
 
         $routeProvider.when('/', {
             templateUrl: 'views/login-view.html',
-            controller: 'homeCtrl'
+            controller: 'homeCtrl',
+            css: 'stylesheets/login.css'
         });
 
         $routeProvider.otherwise({

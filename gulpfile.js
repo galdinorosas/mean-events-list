@@ -19,7 +19,7 @@ var paths = {
         '!index.html',
         '!./bower_components/**/*.html'
     ],
-    scss: './public/scss/*.scss',
+    scss: './public/scss/**/*.scss',
     css: './public/stylesheets/*.css',
     index: 'public/index.html',
     build: './build/'
@@ -59,12 +59,14 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('sass', function() {
-    return gulp.src('./public/scss/*.scss')
+    return gulp.src(paths.scss)
         .pipe(sass())
         .pipe(gulp.dest('./public/stylesheets/'));
 });
 
 gulp.task('nodemon', ['jshint', 'sass'], function(cb) {
+    gulp.watch(paths.scripts, ['jshint']);
+    gulp.watch(paths.scss, ['sass']);
     var started = false;
     return nodemon({
         script: 'app.js',
@@ -78,8 +80,7 @@ gulp.task('nodemon', ['jshint', 'sass'], function(cb) {
         }
     });
 
-    gulp.watch(paths.scripts, ['jshint']);
-    gulp.watch(paths.scss, ['sass']);
+
 });
 
 gulp.task('delete-build', function() {

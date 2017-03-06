@@ -1,10 +1,11 @@
-angular.module('dashboardApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'google.places'])
+angular.module('dashboardApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'google.places', 'angularCSS'])
     .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
         $locationProvider.hashPrefix('!');
 
         $routeProvider.when('/', {
             templateUrl: 'views/dashboard-view.html',
-            controller: 'dashboardCtrl'
+            controller: 'dashboardCtrl',
+            css: 'stylesheets/dashboard.css'
         });
 
         $routeProvider.otherwise({
@@ -48,12 +49,11 @@ angular.module('dashboardApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'google.
                     long: long
                 }
             }).then(function success(response) {
-                console.log('located res:', response);
                 cb(response);
             }, function error(err) {
                 console.log('located err:', err);
             });
-        }
+        };
 
         return api;
 
@@ -63,12 +63,11 @@ angular.module('dashboardApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'google.
             templateUrl: 'views/event-card.html',
             scope: {
                 events: '='
-            }
-        }
+            },
+            css: 'stylesheets/directives/event-card.css'
+        };
     })
-    .controller('dashboardCtrl', ['$scope', 'api', function($scope, api) {
-        console.log('dashboardctrl');
-
+    .controller('dashboardCtrl', ['$scope','api', function($scope,api) {
         api.getArtistData(function(res) {
             console.log('ctrl res:', res);
             $scope.events = res.data.events;
@@ -79,15 +78,12 @@ angular.module('dashboardApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'google.
         var autocompleteFrom = new google.maps.places.Autocomplete(inputFrom);
         google.maps.event.addListener(autocompleteFrom, 'place_changed', function() {
             var place = autocompleteFrom.getPlace();
+            console.log('place', place);
             $scope.lat = place.geometry.location.lat();
             $scope.long = place.geometry.location.lng();
-
-            console.log('place',place);
-            api.locatedEvents($scope.lat,$scope.long,function(res){
-                console.log('located results:', res);
+            api.locatedEvents($scope.lat, $scope.long, function(res) {
                 $scope.events = res.data.located;
-            })
-            $scope.$apply();
+            });
         });
 
 

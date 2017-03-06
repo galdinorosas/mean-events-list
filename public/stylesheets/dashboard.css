@@ -1,0 +1,23 @@
+header h1 {
+  text-align: center; }
+
+header a {
+  position: absolute;
+  top: 1%;
+  right: 5%; }
+
+#googlePlaces {
+  border: 1px solid black;
+  margin: 0 auto;
+  display: block;
+  width: 200px;
+  height: 30px;
+  padding-left: 5px; }
+
+@media (min-width: 768px) {
+  #googlePlaces {
+    width: 250px; } }
+
+@media (min-width: 1024px) {
+  #googlePlaces {
+    width: 300px; } }

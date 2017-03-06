@@ -1,3 +1,9 @@
-<p> event Date: {{events.date}}</p>
-<p> event Title: {{events.title}}</p>
-<p> event Location: {{events.location}}</p>
+<div class="event-container">
+    <div class="event-info">
+        <p class="eventDate">{{events.date}}</p>
+        <p class="eventName">{{events.name}} </p>
+        <p class="eventLocation">{{events.location}}</p>
+        <p class="eventVenue">{{events.venue}}</p>
+    </div>
+    <img ng-src="{{events.image}}">
+</div>
