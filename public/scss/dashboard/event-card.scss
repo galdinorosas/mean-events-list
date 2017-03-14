@@ -3,6 +3,7 @@ event-card .event-container {
     margin-bottom: 10px;
     border-bottom: 1px solid black;
     border-top: 1px solid black;
+    cursor: pointer;
 }
 
 event-card .event-container:first-child {

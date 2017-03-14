@@ -4,8 +4,14 @@ angular.module('dashboardApp')
             restrict: 'EA',
             templateUrl: './dashboard/event-card.html',
             scope: {
-                events: '='
+                event: '='
             },
-            css: './stylesheets/dashboard/event-card.css'
+            css: './stylesheets/dashboard/event-card.css',
+            link: function(scope, element, attrs){
+                element.bind('click', function(){
+                    console.log('directive scope',scope);
+                    window.open(scope.event.url,'_blank');
+                });
+            }
         };
     });
